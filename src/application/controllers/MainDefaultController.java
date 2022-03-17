@@ -30,7 +30,7 @@ import javafx.stage.Stage;
 public class MainDefaultController implements Initializable {
 
 	// Instantiate logger
-	private Logger logger = Main.my_log;
+	private Logger logger = Main.main_log;
 
 	// Declare local FXML Tags
 	@FXML Button showHideButton;

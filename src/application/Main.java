@@ -2,10 +2,7 @@ package application;
 
 import java.io.File;
 import java.sql.ResultSet;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
+import java.util.logging.*;
 
 import application.data.Database;
 import application.data.WebScrape;
@@ -61,19 +58,20 @@ public class Main extends Application {
 	public static String sbTenString;
 	public static String sbAllString;
 
-	// Declare FileHandler for Database.logger
-	public static Logger my_log;
+	// Declare variables for logging
+	public static Logger main_log = Logger.getLogger( Logger.GLOBAL_LOGGER_NAME );
 	public static FileHandler fileHandler;
+	public static ConsoleHandler consoleHandler;
 	public static File file;
-	
+
 	/** Main method calls launch() to start JavaFX GUI.
 	 *  @param args mandatory parameters for command line method call */
 	public static void main(String[] args) {
 
 		try {
 			// Instantiate Logger, set level
-			my_log = Logger.getLogger("application.Main");
-			my_log.setLevel(Level.INFO);
+			LogManager.getLogManager().reset();
+			main_log.setLevel(Level.ALL);
 
 			// Create file for logging and instantiate FileHandler
 			file = new File("log.txt");
@@ -81,23 +79,24 @@ public class Main extends Application {
 				file.createNewFile();
 			}
 
-			// Instantiate FileHandler with append set to true
-			fileHandler = new FileHandler("log.txt", true);
+			// Instantiate FileHandler, set level, and add to log
+			fileHandler = new FileHandler("log.txt", false);
+			fileHandler.setLevel(Level.ALL);
+			main_log.addHandler(fileHandler);
 
-			// Add fileHandler to log
-			my_log.addHandler(fileHandler);
+			// Instantiate ConsoleHandler, set level, and add to log
+			consoleHandler = new ConsoleHandler();
+			consoleHandler.setLevel(Level.INFO);
+			main_log.addHandler(consoleHandler);
 
-			// Set formatting of log file
+			// Set formatting of log files
 			SimpleFormatter formatter = new SimpleFormatter();
 			fileHandler.setFormatter(formatter);
-
-			my_log.info("Info msg");
-			my_log.warning("warning msg");
-			my_log.severe("severe msg");
+			consoleHandler.setFormatter(formatter);
 
 		} catch (Exception e) {
 			System.out.println("Error creating Logger in Main: " + e.getMessage());
-			my_log.severe("Logger could not be created in Main");
+			main_log.severe("Logger could not be created in Main");
 		}
 
 		// Create wordsTable if it doesn't exist
@@ -293,10 +292,12 @@ public class Main extends Application {
 				Database.deleteTable("words");
 				Database.createWordsTable("words");
 				System.out.println("Window Closed!");
+				main_log.warning("Window Closed!");
 				window.close();
 		   } catch (Exception e) {
 			   System.out.println(e.getMessage());
 			   e.printStackTrace();
+			   main_log.severe("Unable to execute Main.closeProgram(): " + e.getMessage());
 		   }
     	   
        }

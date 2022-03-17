@@ -1,7 +1,9 @@
 package application.views.prompts;
 
 import java.net.URL;
+import java.util.logging.Logger;
 
+import application.Main;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -22,6 +24,9 @@ import javafx.stage.Stage;
  *  data pertaining to the web text to be parsed and returns as a String array
  *  @author Derek DiLeo*/
 public class QuestionBox {
+
+    // Instantiate logger
+    private static Logger logger = Main.main_log;
 
     // Define String array to be returned to caller
     protected static String[] responses = new String[3];
@@ -105,9 +110,11 @@ public class QuestionBox {
         			window.close();
         		} else {
         			AlertBox.display("Error", "Start/Finish fields cannot be left blank.");
+                    logger.warning("Error: Start/Finish fields cannot be left blank!");
         		}
         	} else {
         		AlertBox.display("Error Invalid URL", "Please Try Again.");
+                logger.warning("Error: Invalid URL");
         	}
         	
         });
@@ -125,6 +132,7 @@ public class QuestionBox {
             responses[0] = defaultEntries[0];
             responses[1] = defaultEntries[1];
             responses[2] = defaultEntries[2];
+            logger.warning("Test button pressed in QuestionBox!");
             window.close();
         });
         
@@ -170,6 +178,7 @@ public class QuestionBox {
     		return true;
     	} catch (Exception e) {
     		System.out.println("Invalid URL passed to QuestionBox!");
+            logger.warning("Invalid URL passed to QuestionBox!");
     		return false;
     	}
     	

@@ -8,7 +8,6 @@ import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 import application.Main;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,7 +30,7 @@ import javafx.stage.Stage;
 public class MainController implements Initializable {
 
 	// Instantiate logger
-	private Logger logger = Main.my_log;
+	private Logger logger = Main.main_log;
 
 	// Declare local FXML Tags
 	@FXML Button showHideButton;
@@ -65,12 +64,12 @@ public class MainController implements Initializable {
 			Image imageFile = new Image("/resources/img/image.png");
 			ImageView image = new ImageView();
 			image.setImage(imageFile);
-			logger.info("Loading Raven view from MainController!");
+			logger.info("Loading Raven view top 10 from MainController!");
 		} else {
 			Image imageFile = new Image("/resources/img/image2.png");
 			ImageView image2 = new ImageView();
 			image2.setImage(imageFile);						
-			logger.info("Loading default view from MainController!");
+			logger.info("Loading default view top 10 from MainController!");
 
 		}
 		

@@ -31,7 +31,7 @@ import javafx.stage.Stage;
 public class AllResultsDefaultController implements Initializable  {
 
 	// Instantiate logger
-	private Logger logger = Main.my_log;
+	private Logger logger = Main.main_log;
 
 	// Declare local FXML Tags
 	@FXML Label copyrightLabel;
@@ -61,6 +61,8 @@ public class AllResultsDefaultController implements Initializable  {
 		
 		// Push All Results to GUI
 		textAreaAllResults.setText(Main.sbAllString);
+
+		logger.info("Loading default view of all results from AllResultsDefaultController!");
 	}
 	
 	/** Method to call Main.closeProgram() when File, Close clicked.

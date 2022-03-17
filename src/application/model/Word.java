@@ -14,7 +14,7 @@ public class Word implements Comparable<Word> {
 	private int frequency;
 
 	// Instantiate logger
-	private Logger logger = Main.my_log;
+	private Logger logger = Main.main_log;
 
 	// Constructor
 	public Word(String word, int frequency) {

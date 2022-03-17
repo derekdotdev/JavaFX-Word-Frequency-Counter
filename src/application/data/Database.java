@@ -2,12 +2,10 @@ package application.data;
 
 import application.Main;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 /** The Database class will be home to all methods which  
@@ -19,7 +17,7 @@ public class Database {
 	protected static Connection conn;
 
 	// Instantiate Logger from Main
-	public static Logger logger = Main.my_log;
+	public static Logger logger = Main.main_log;
 
 	/** Method establishes a connection with local MySQL database
 	 *  @return returns a database Connection to the caller
@@ -33,12 +31,13 @@ public class Database {
 			String password = "password";
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url, username, password);
-			logger.info("Database connection established");
+
+			logger.finest("Database.getConnection() called!");
 			return conn;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
-			logger.severe("Database connection failed!");
+			logger.severe("Database.getConnection() failed!");
  		}
 		// Return null if not successful
 		return null;
@@ -65,8 +64,8 @@ public class Database {
 			e.printStackTrace();
 			logger.severe("Error in Database.createWordsTable: " + e.getMessage());
 		} finally {
-			System.out.println("The Method: createTable() is complete!");
-			logger.info("The Method: createTable() is complete!");
+			System.out.println("Database.createTable(): complete!");
+			logger.info("Database.createTable(): complete!");
 		}
 		
 	}
@@ -83,7 +82,9 @@ public class Database {
 			String delete = "DROP TABLE IF EXISTS " + tableName + "";
 			PreparedStatement pstmt = conn.prepareStatement(delete);
  		 	pstmt.executeUpdate();
- 		 	
+
+		  	logger.finer("Table [ " + tableName + " ] was deleted via Database.deleteTable()");
+
  		 	// Close the connection
 			conn.close();
 		} catch(Exception e) {
@@ -91,8 +92,8 @@ public class Database {
 			logger.severe("Error in Database.deleteTable(): " + e.getMessage());
 			e.printStackTrace();
 		} finally {
-			System.out.println("The Method: deleteTable() is complete!");
-			logger.info("The Method: deleteTable() is complete!");
+			System.out.println("Database.deleteTable(): complete!");
+			logger.warning("Database.deleteTable(): complete!");
 		}
 		
 	}
@@ -107,6 +108,8 @@ public class Database {
 			String post = "INSERT INTO words (word, frequency) VALUES ('" + word +"', '" + frequency + "')";
 			PreparedStatement pstmt = conn.prepareStatement(post);
 			pstmt.executeUpdate();
+
+			logger.fine("Word [ " + word + " ] with frequency [ " + frequency + " ] inserted via Database.post()");
 			conn.close();
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
@@ -125,6 +128,7 @@ public class Database {
 			String post = "DELETE FROM words WHERE word = '" + word + "'";
 			PreparedStatement pstmt = conn.prepareStatement(post);
 			pstmt.executeUpdate();
+			logger.finer("Word [ " + word + " ] deleted in Database.delete()");
 			conn.close();
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
@@ -144,6 +148,8 @@ public class Database {
 			String update = "UPDATE words SET frequency = " + frequency + " WHERE word  = '" + word + "'";
 			PreparedStatement pstmt = conn.prepareStatement(update);
 			pstmt.executeUpdate();
+
+			logger.finer("Word [ " + word + " ] updated to [ " + frequency + " ] in Database.update()");
 			conn.close();
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
@@ -178,7 +184,7 @@ public class Database {
 			e.printStackTrace();
 			logger.severe("Error in Database.queryFrequency(): " + e.getMessage());
 		}
-		
+		logger.warning("Word [ " + word + " ] was not found in the database.");
 		return -1; // if not successful
 	}
 	
@@ -196,8 +202,8 @@ public class Database {
 			e.printStackTrace();
 			logger.severe("Error obtaining ResultSet from database: " + e);
 		} finally {
-			System.out.println("The Method: queryAll is complete!");
-			logger.info("The Method: queryAll is complete!");
+			System.out.println("Database.getResults(): complete!");
+			logger.info("Database.getResults(): complete!");
 		}
 		
 		return null; // if not successful
