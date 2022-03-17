@@ -1,6 +1,11 @@
 package application;
 
+import java.io.File;
 import java.sql.ResultSet;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import application.data.Database;
 import application.data.WebScrape;
@@ -55,10 +60,46 @@ public class Main extends Application {
 	// These are accessed by the four Controller classes to print to GUI 
 	public static String sbTenString;
 	public static String sbAllString;
+
+	// Declare FileHandler for Database.logger
+	public static Logger my_log;
+	public static FileHandler fileHandler;
+	public static File file;
 	
 	/** Main method calls launch() to start JavaFX GUI.
 	 *  @param args mandatory parameters for command line method call */
 	public static void main(String[] args) {
+
+		try {
+			// Instantiate Logger, set level
+			my_log = Logger.getLogger("application.Main");
+			my_log.setLevel(Level.INFO);
+
+			// Create file for logging and instantiate FileHandler
+			file = new File("log.txt");
+			if(!file.exists()) {
+				file.createNewFile();
+			}
+
+			// Instantiate FileHandler with append set to true
+			fileHandler = new FileHandler("log.txt", true);
+
+			// Add fileHandler to log
+			my_log.addHandler(fileHandler);
+
+			// Set formatting of log file
+			SimpleFormatter formatter = new SimpleFormatter();
+			fileHandler.setFormatter(formatter);
+
+			my_log.info("Info msg");
+			my_log.warning("warning msg");
+			my_log.severe("severe msg");
+
+		} catch (Exception e) {
+			System.out.println("Error creating Logger in Main: " + e.getMessage());
+			my_log.severe("Logger could not be created in Main");
+		}
+
 		// Create wordsTable if it doesn't exist
 		try {
 			Database.createWordsTable("words");

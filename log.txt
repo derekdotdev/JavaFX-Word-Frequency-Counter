@@ -1,0 +1,28 @@
+Mar 17, 2022 12:16:36 PM application.Main main
+INFO: Info msg
+Mar 17, 2022 12:16:36 PM application.Main main
+WARNING: warning msg
+Mar 17, 2022 12:16:36 PM application.Main main
+SEVERE: severe msg
+Mar 17, 2022 12:16:38 PM application.data.Database createWordsTable
+INFO: The Method: createTable() is complete!
+Mar 17, 2022 12:17:41 PM application.data.Database deleteTable
+INFO: The Method: deleteTable() is complete!
+Mar 17, 2022 12:17:41 PM application.data.Database createWordsTable
+INFO: The Method: createTable() is complete!
+Mar 17, 2022 12:24:33 PM application.Main main
+INFO: Info msg
+Mar 17, 2022 12:24:33 PM application.Main main
+WARNING: warning msg
+Mar 17, 2022 12:24:33 PM application.Main main
+SEVERE: severe msg
+Mar 17, 2022 12:24:34 PM application.data.Database createWordsTable
+INFO: The Method: createTable() is complete!
+Mar 17, 2022 12:25:09 PM application.controllers.MainController initialize
+INFO: Loading Raven view!
+Mar 17, 2022 12:25:18 PM application.controllers.MainController handleHyperlink
+INFO: Hyperlink clicked in MainController!
+Mar 17, 2022 12:25:24 PM application.data.Database deleteTable
+INFO: The Method: deleteTable() is complete!
+Mar 17, 2022 12:25:24 PM application.data.Database createWordsTable
+INFO: The Method: createTable() is complete!

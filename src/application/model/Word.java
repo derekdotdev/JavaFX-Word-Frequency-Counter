@@ -1,6 +1,10 @@
 package application.model;
 
-/** Word Class objects are created from HashMap(of String, Integer) (key=word, value=frequency) and 
+import application.Main;
+
+import java.util.logging.Logger;
+
+/** Word Class objects are created from HashMap(of String, Integer) (key=word, value=frequency) and
  * implements Comparable(of Word) so ArrayList(Word) can be sorted and overrides toString() to print results to console. 
  * @author derekdileo */
 public class Word implements Comparable<Word> {
@@ -8,6 +12,9 @@ public class Word implements Comparable<Word> {
 	// Local variables
 	private String word;
 	private int frequency;
+
+	// Instantiate logger
+	private Logger logger = Main.my_log;
 
 	// Constructor
 	public Word(String word, int frequency) {
@@ -39,13 +46,15 @@ public class Word implements Comparable<Word> {
 	
 	public void validateWord() {
 		if(this.word.isEmpty()) {
-			throw new RuntimeException("Word Cannot be null or empty");
+			logger.warning("Word cannot be null or empty!");
+			throw new RuntimeException("Word cannot be null or empty");
 		}
 	}
 
 	public void validateFrequency() {
 		if(this.frequency <= 0) {
-			throw new RuntimeException("Frequency Cannot be negative");
+			logger.severe("Frequency of a word cannot be negative");
+			throw new RuntimeException("Frequency of a word cannot be negative");
 		}
 		String str = "" + frequency;
 

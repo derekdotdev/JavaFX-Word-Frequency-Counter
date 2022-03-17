@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 import application.Main;
 import javafx.event.ActionEvent;
@@ -27,7 +28,10 @@ import javafx.stage.Stage;
  *  initialize() prior to launching GUI. 
  *  @author Derek DiLeo */
 public class MainDefaultController implements Initializable {
-	
+
+	// Instantiate logger
+	private Logger logger = Main.my_log;
+
 	// Declare local FXML Tags
 	@FXML Button showHideButton;
 	@FXML Hyperlink hyperlink;
@@ -62,6 +66,8 @@ public class MainDefaultController implements Initializable {
 		
 		// Display top ten results
 		labelText.setText(Main.sbTenString);
+
+		logger.info("Loading default view from MainDefaultController!");
 		
 	}
 	
@@ -78,8 +84,10 @@ public class MainDefaultController implements Initializable {
 			  Desktop desktop = java.awt.Desktop.getDesktop();
 			  URI oURL = new URI(aboutSite);
 			  desktop.browse(oURL);
+			  logger.info("Help > about clicked in MainDefaultController!");
 			} catch (Exception e) {
 			  e.printStackTrace();
+			  logger.severe("Unable to handle help > about in MainDefaultController: " + e.getMessage());
 			}
 		
 	}
@@ -91,8 +99,10 @@ public class MainDefaultController implements Initializable {
 			  Desktop desktop = java.awt.Desktop.getDesktop();
 			  URI oURL = new URI(Main.userResponses[0]);
 			  desktop.browse(oURL);
+			  logger.info("Hyperlink clicked in MainDefaultController!");
 			} catch (Exception e) {
 			  e.printStackTrace();
+			  logger.severe("Unable to handle hyperlink in MainDefaultController: " + e.getMessage());
 			}
 	}
 
@@ -111,6 +121,7 @@ public class MainDefaultController implements Initializable {
 		} catch (IOException e) {
 			System.out.println("Error switching to AllResultsDefault.fxml: IOException: " + e);
 			e.printStackTrace();
+			logger.severe("Unable to switch to AllResultsDefault.fxml from MainDefaultController: " + e.getMessage());
 		}
 		
 	}

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 import application.Main;
 import javafx.event.ActionEvent;
@@ -28,6 +29,9 @@ import javafx.stage.Stage;
  *  initialize() prior to launching GUI. 
  *  @author Derek DiLeo */
 public class AllResultsController implements Initializable  {
+
+	// Instantiate logger
+	private Logger logger = Main.my_log;
 
 	// Declare local FXML Tags
 	@FXML Label copyrightLabel;
@@ -72,8 +76,10 @@ public class AllResultsController implements Initializable  {
 			  Desktop desktop = java.awt.Desktop.getDesktop();
 			  URI oURL = new URI(aboutSite);
 			  desktop.browse(oURL);
+			  logger.info("Help > about clicked in AllResultsController!");
 			} catch (Exception e) {
 			  e.printStackTrace();
+			  logger.severe("Unable to handle help > about from AllResultsDefaultController: " + e.getMessage());
 			}
 		
 	}
@@ -85,8 +91,10 @@ public class AllResultsController implements Initializable  {
 			  Desktop desktop = java.awt.Desktop.getDesktop();
 			  URI oURL = new URI(Main.userResponses[0]);
 			  desktop.browse(oURL);
+			  logger.info("Hyper link clicked in AllResultsController!");
 			} catch (Exception e) {
 			  e.printStackTrace();
+			  logger.severe("Unable to handle hyperlink in AllResultsController: " + e.getMessage());
 			}
 	}
 
@@ -104,6 +112,7 @@ public class AllResultsController implements Initializable  {
 		} catch (IOException e) {
 			System.out.println("Error switching to Main.fxml: IOException: " + e);
 			e.printStackTrace();
+			logger.info("Unable to switch to Main.fxml from AllResultsController: " + e.getMessage());
 		}
 		
 	}

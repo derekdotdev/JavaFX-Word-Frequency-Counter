@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 import application.Main;
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,7 +29,10 @@ import javafx.stage.Stage;
  * initialize() prior to launching GUI. 
  * @author Derek DiLeo */
 public class MainController implements Initializable {
-	
+
+	// Instantiate logger
+	private Logger logger = Main.my_log;
+
 	// Declare local FXML Tags
 	@FXML Button showHideButton;
 	@FXML Hyperlink hyperlink;
@@ -59,12 +64,14 @@ public class MainController implements Initializable {
 		if(Main.defaultSite) {
 			Image imageFile = new Image("/resources/img/image.png");
 			ImageView image = new ImageView();
-			image.setImage(imageFile);						
+			image.setImage(imageFile);
+			logger.info("Loading Raven view from MainController!");
 		} else {
 			Image imageFile = new Image("/resources/img/image2.png");
 			ImageView image2 = new ImageView();
 			image2.setImage(imageFile);						
-		
+			logger.info("Loading default view from MainController!");
+
 		}
 		
 		// Display top ten results
@@ -75,6 +82,7 @@ public class MainController implements Initializable {
 	/** Method to call Main.closeProgram() when File, Close clicked.
 	 *  @param event when user clicks File, Close */
 	@FXML public void handleFileClose(ActionEvent event) {
+
 		Main.closeProgram();
 	}
 
@@ -85,8 +93,10 @@ public class MainController implements Initializable {
 			  Desktop desktop = java.awt.Desktop.getDesktop();
 			  URI oURL = new URI(aboutSite);
 			  desktop.browse(oURL);
+			  logger.info("Help > about clicked in MainController!");
 			} catch (Exception e) {
 			  e.printStackTrace();
+			  logger.severe("Unable to handle help > about in MainController: " + e.getMessage());
 			}
 		
 	}
@@ -98,8 +108,10 @@ public class MainController implements Initializable {
 			  Desktop desktop = java.awt.Desktop.getDesktop();
 			  URI oURL = new URI(Main.userResponses[0]);
 			  desktop.browse(oURL);
+			  logger.info("Hyperlink clicked in MainController!");
 			} catch (Exception e) {
 			  e.printStackTrace();
+			  logger.severe("Error handling hyperlink in MainController: " + e.getMessage());
 			}
 	}
 
@@ -118,6 +130,7 @@ public class MainController implements Initializable {
 		} catch (IOException e) {
 			System.out.println("Error switching to AllResults.fxml: IOException: " + e);
 			e.printStackTrace();
+			logger.severe("Unable to switch to AllResults.fxml from MainController: " + e.getMessage());
 		}
 		
 	}

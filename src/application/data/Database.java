@@ -1,18 +1,25 @@
 package application.data;
 
+import application.Main;
+
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
 
 /** The Database class will be home to all methods which  
  *  pertain to the local MySQL database for this project.
  *  @author derekdileo */
 public class Database {
 
-	// Declare variable
+	// Declare Connection
 	protected static Connection conn;
 
+	// Instantiate Logger from Main
+	public static Logger logger = Main.my_log;
 
 	/** Method establishes a connection with local MySQL database
 	 *  @return returns a database Connection to the caller
@@ -26,11 +33,13 @@ public class Database {
 			String password = "password";
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url, username, password);
+			logger.info("Database connection established");
 			return conn;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
- 		} 
+			logger.severe("Database connection failed!");
+ 		}
 		// Return null if not successful
 		return null;
 	}
@@ -48,14 +57,16 @@ public class Database {
 			String create = "CREATE TABLE IF NOT EXISTS " + tableName + " (word varchar(255) NOT NULL UNIQUE, frequency int NOT NULL, PRIMARY KEY(word))";
 			PreparedStatement pstmt = conn.prepareStatement(create);
  		 	pstmt.executeUpdate();
- 		 	
+
  		 	// Close the connection
 			conn.close();
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
+			logger.severe("Error in Database.createWordsTable: " + e.getMessage());
 		} finally {
 			System.out.println("The Method: createTable() is complete!");
+			logger.info("The Method: createTable() is complete!");
 		}
 		
 	}
@@ -77,9 +88,11 @@ public class Database {
 			conn.close();
 		} catch(Exception e) {
 			System.out.println("Error in Database.deleteTable(): " + e.getMessage());
+			logger.severe("Error in Database.deleteTable(): " + e.getMessage());
 			e.printStackTrace();
 		} finally {
 			System.out.println("The Method: deleteTable() is complete!");
+			logger.info("The Method: deleteTable() is complete!");
 		}
 		
 	}
@@ -98,6 +111,7 @@ public class Database {
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
+			logger.severe("Error in Database.post(): " + e.getMessage());
 		} 
 		
 	}
@@ -115,6 +129,7 @@ public class Database {
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
+			logger.severe("Error in Database.delete(): " + e.getMessage());
 		} 
 		
 	}
@@ -133,6 +148,7 @@ public class Database {
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
+			logger.severe("Error updating frequency of [" + word + "] in database: " + e.getMessage());
 		} 
 		
 	}
@@ -160,6 +176,7 @@ public class Database {
 		} catch(Exception e) {
 			System.out.println("Error in Database.queryFrequency(): " + e.getMessage());
 			e.printStackTrace();
+			logger.severe("Error in Database.queryFrequency(): " + e.getMessage());
 		}
 		
 		return -1; // if not successful
@@ -177,8 +194,10 @@ public class Database {
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
+			logger.severe("Error obtaining ResultSet from database: " + e);
 		} finally {
 			System.out.println("The Method: queryAll is complete!");
+			logger.info("The Method: queryAll is complete!");
 		}
 		
 		return null; // if not successful

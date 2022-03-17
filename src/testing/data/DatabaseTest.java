@@ -42,12 +42,7 @@ class DatabaseTest {
 		Database.update("The", 5);
 		System.out.println("beforeeach: " + testInfo.getDisplayName() + " in " + this + ": Frequency of 'The' updated to 5");
 	}
-	
-	
-	
-	
-	
-	
+
 	
 	@DisplayName("Frequency should be 5")
 	@Test
@@ -184,16 +179,7 @@ class DatabaseTest {
 		});
 		assertEquals("For input string: \"foo\"", expected.getMessage());
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 //	oldSchoolApproaches
 //		@Test(expected = NumberFormatException.class)
