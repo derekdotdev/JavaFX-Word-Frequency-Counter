@@ -1,0 +1,17 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+.root {
+	-fx-font-size: 10pt;
+	
+}
+
+.layout {
+	
+}
+
+.qBoxStackPane1 {
+	
+}
+
+.site-label {
+	-fx-text-alignment: left;
+}
