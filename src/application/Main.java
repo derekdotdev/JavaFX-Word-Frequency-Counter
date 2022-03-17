@@ -2,6 +2,10 @@ package application;
 
 import java.sql.ResultSet;
 
+import application.data.Database;
+import application.data.WebScrape;
+import application.views.prompts.ConfirmBox;
+import application.views.prompts.QuestionBox;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,7 +18,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	
 	// Variables for call to QuestionBox.display()
-	protected static boolean defaultSite = false;
+	public static boolean defaultSite = false;
 	protected static String userWebsite = null;
 	protected static String sourceHead = null;
 	protected static String sourceEnd = null;
@@ -39,7 +43,7 @@ public class Main extends Application {
 	private String[] appIntro = {appIntroTitle, appIntroMessage};
 	
 	// String array to hold QuestionBox.display() responses.
-	protected static String[] userResponses;
+	public static String[] userResponses;
 	
 	// Local Lists and Maps to hold return values from Class methods
 	private String[] wordsArray;
@@ -49,8 +53,8 @@ public class Main extends Application {
 	private StringBuilder sbAll;
 	
 	// These are accessed by the four Controller classes to print to GUI 
-	protected static String sbTenString;
-	protected static String sbAllString;
+	public static String sbTenString;
+	public static String sbAllString;
 	
 	/** Main method calls launch() to start JavaFX GUI.
 	 *  @param args mandatory parameters for command line method call */
@@ -116,7 +120,7 @@ public class Main extends Application {
 		
 		try {
 			if (defaultSite) {
-				BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("Main.fxml"));
+				BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("/application/views/Main.fxml"));
 				//setUserAgentStylesheet(STYLESHEET_CASPIAN);
 				Scene scene = new Scene(root,800,600);
 				// use FXML to point to CSS!
@@ -124,7 +128,7 @@ public class Main extends Application {
 				window.setScene(scene);
 				window.show();
 			} else {
-				BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("MainDefault.fxml"));
+				BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("/application/views/MainDefault.fxml"));
 				//setUserAgentStylesheet(STYLESHEET_CASPIAN);
 				Scene scene = new Scene(root,800,600);
 				// use FXML to point to CSS!
@@ -238,7 +242,7 @@ public class Main extends Application {
 	}
 		
 	/** closeProgram() Method uses ConfirmBox class to confirm is user wants to quit */
-	protected static void closeProgram() {
+	public static void closeProgram() {
        // Ask if user wants to exit (no title necessary, leave blank)
        Boolean answer = ConfirmBox.display("", "Are you sure you want to quit?");
        if (answer) {
