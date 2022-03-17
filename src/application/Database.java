@@ -22,7 +22,7 @@ public class Database {
 			String url = "jdbc:mysql://localhost:3306/word_occurrences"; 
 //			String url = "jdbc:mysql://24.196.52.166:3306/database_name"; used for an online db
 			String username = "root";
-			String password = "rootpassword";
+			String password = "password";
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url, username, password);
 			return conn;
